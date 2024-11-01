@@ -9,20 +9,22 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 @AllArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     private UserRepository repository;
-    private AuthenticationManager manager;
     private JwtService jwtService;
 
     @Override
-    public void authenticate(AuthDTO dto) {
+    public void authenticate(AuthDTO dto,AuthenticationManager manager) {
         var auth = new UsernamePasswordAuthenticationToken(dto.getEmail(),dto.getPassword());
+        manager.authenticate(auth);
     }
     @Override
     public String generateToken(AuthDTO dto) {
-        var user = repository.findByEmail(dto.getEmail()).orElseThrow(()-> new RuntimeException());
+        var user = repository.findByEmail(dto.getEmail()).orElseThrow(()-> new RuntimeException("AAA"));
         return jwtService.createToken(user);
     }
 

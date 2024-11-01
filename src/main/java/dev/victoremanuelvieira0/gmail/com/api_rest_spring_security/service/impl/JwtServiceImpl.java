@@ -5,11 +5,13 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.entity.User;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.service.JwtService;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+@Service
 public class JwtServiceImpl implements JwtService {
     @Override
     public String createToken(User user) {

@@ -23,13 +23,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize->authorize
-                        .requestMatchers(HttpMethod.POST,"/users").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/auth").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/users/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/users").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/users/{id}").permitAll()
-                        .requestMatchers(HttpMethod.PUT,"/users/{id}").permitAll())
+                .authorizeHttpRequests(authorize->authorize.anyRequest().permitAll())
                 .build();
     }
 
