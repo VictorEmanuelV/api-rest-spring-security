@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 
+@EqualsAndHashCode(of = "id")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
