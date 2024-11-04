@@ -4,6 +4,7 @@ import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.dto.UserCreat
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.dto.UserResponseDTO;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.dto.UserUpdateDTO;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.entity.User;
+import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.enums.RoleEnum;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.EmailAlreadyExistsException;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.UserNotExistsException;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.repository.UserRepository;
@@ -29,14 +30,15 @@ public class UserServiceImpl implements UserService {
             throw new EmailAlreadyExistsException("Email already exists");
         }
 
+
         var user = User.builder()
                   .name(dto.getName())
                   .email(dto.getEmail())
                   .password(passwordEncoder.encode(dto.getPassword()))
-                  .role(dto.getRole())
+                  .role(RoleEnum.valueOf(dto.getRole().toUpperCase()))
                   .build();
 
-       var response =  repository.save(user);
+        var response =  repository.save(user);
 
        return UserResponseDTO.builder()
                .id(response.getId())
@@ -96,7 +98,7 @@ public class UserServiceImpl implements UserService {
                         .name(dto.getName())
                         .email(dto.getEmail())
                         .password(dto.getPassword())
-                        .role(dto.getRole())
+                        .role(RoleEnum.valueOf(dto.getRole().toUpperCase()))
                         .build());
 
         return UserResponseDTO.builder()
@@ -106,4 +108,6 @@ public class UserServiceImpl implements UserService {
                 .password(response.getPassword())
                 .role(response.getRole()).build();
     }
+
+
 }

@@ -5,6 +5,7 @@ import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.Use
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -63,4 +64,20 @@ public class ApiExceptionHandler {
 
         return ResponseEntity.status(status.value()).body(error);
     }
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<StandardError>badCredentialsException(BadCredentialsException ex,
+                                                                    HttpServletRequest request){
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+
+        var error = StandardError.builder()
+                .timestamp(Instant.now())
+                .message(ex.getMessage())
+                .error(status.getReasonPhrase())
+                .Status(status.value())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(status.value()).body(error);
+    }
+
 }

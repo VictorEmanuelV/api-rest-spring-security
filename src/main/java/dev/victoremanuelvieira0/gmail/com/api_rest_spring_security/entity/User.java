@@ -12,7 +12,6 @@ import java.util.List;
 
 @EqualsAndHashCode(of = "id")
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -44,5 +43,14 @@ public class User implements Serializable, UserDetails {
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    public User(Long id, String name, String email, String password, RoleEnum role) {
+
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 }

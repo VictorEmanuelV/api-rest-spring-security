@@ -3,6 +3,7 @@ package dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.controller;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.dto.UserCreateDTO;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.dto.UserResponseDTO;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.dto.UserUpdateDTO;
+import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.enums.RoleEnum;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
