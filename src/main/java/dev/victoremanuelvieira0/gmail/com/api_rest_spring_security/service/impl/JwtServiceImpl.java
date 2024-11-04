@@ -4,6 +4,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.entity.User;
+import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.ErrorCreationTokenException;
+import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.ErrorVerificationTokenException;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.service.JwtService;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,7 @@ public class JwtServiceImpl implements JwtService {
                     .withExpiresAt(dateExpire())
                     .sign(algorithm());
         }catch (JWTCreationException ex){
-            throw new RuntimeException(ex);
+            throw new ErrorCreationTokenException(ex.getMessage());
         }
 
     }
@@ -36,7 +38,7 @@ public class JwtServiceImpl implements JwtService {
                     .verify(token)
                     .getSubject();
         }catch (JWTVerificationException ex){
-            throw new RuntimeException(ex);
+            throw new ErrorVerificationTokenException(ex.getMessage());
         }
     }
     private Algorithm algorithm(){

@@ -1,6 +1,8 @@
 package dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.handler;
 
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.EmailAlreadyExistsException;
+import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.ErrorCreationTokenException;
+import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.ErrorVerificationTokenException;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.UserNotExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -80,4 +82,34 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(status.value()).body(error);
     }
 
+    @ExceptionHandler(ErrorCreationTokenException.class)
+    public ResponseEntity<StandardError>errorCreationTokenException(ErrorCreationTokenException ex,
+                                                                HttpServletRequest request){
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        var error = StandardError.builder()
+                .timestamp(Instant.now())
+                .message(ex.getMessage())
+                .error(status.getReasonPhrase())
+                .Status(status.value())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(status.value()).body(error);
+    }
+    @ExceptionHandler(ErrorVerificationTokenException.class)
+    public ResponseEntity<StandardError>errorVerificationTokenException(ErrorCreationTokenException ex,
+                                                                    HttpServletRequest request){
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        var error = StandardError.builder()
+                .timestamp(Instant.now())
+                .message(ex.getMessage())
+                .error(status.getReasonPhrase())
+                .Status(status.value())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(status.value()).body(error);
+    }
 }
