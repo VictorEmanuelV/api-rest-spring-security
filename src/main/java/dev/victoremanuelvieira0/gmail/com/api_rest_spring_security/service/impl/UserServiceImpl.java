@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
                   .role(RoleEnum.valueOf(dto.getRole().toUpperCase()))
                   .build();
 
-        var response =  repository.save(user);
+        var response = repository.save(user);
 
        return UserResponseDTO.builder()
                .id(response.getId())
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO findById(Long id) {
-        var user =  repository.findById(id).orElseThrow(()->new RuntimeException("not found"));
+        var user =  repository.findById(id).orElseThrow(()->new UserNotExistsException("not found"));
 
         return UserResponseDTO.builder()
                 .id(user.getId())
