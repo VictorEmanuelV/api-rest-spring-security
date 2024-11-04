@@ -1,6 +1,7 @@
 package dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.service.impl;
 
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.dto.AuthDTO;
+import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.exception.UserNotExistsException;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.repository.UserRepository;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.service.AuthenticationService;
 import dev.victoremanuelvieira0.gmail.com.api_rest_spring_security.service.JwtService;
@@ -24,12 +25,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
     @Override
     public String generateToken(AuthDTO dto) {
-        var user = repository.findByEmail(dto.getEmail()).orElseThrow(()-> new RuntimeException("AAA"));
+        var user = repository.findByEmail(dto.getEmail()).orElseThrow(()-> new UserNotExistsException("Not found"));
         return jwtService.createToken(user);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email)  {
         return repository.findByEmail(email)
                 .orElseThrow(()-> new UsernameNotFoundException("Erro ao tentar autenticar usuario não encontrado no banco"));
     }
