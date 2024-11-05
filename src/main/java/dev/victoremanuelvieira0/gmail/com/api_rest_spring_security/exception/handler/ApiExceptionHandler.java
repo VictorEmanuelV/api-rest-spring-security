@@ -98,7 +98,7 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(status.value()).body(error);
     }
     @ExceptionHandler(ErrorVerificationTokenException.class)
-    public ResponseEntity<StandardError>errorVerificationTokenException(ErrorCreationTokenException ex,
+    public ResponseEntity<StandardError>errorVerificationTokenException(ErrorVerificationTokenException ex,
                                                                     HttpServletRequest request){
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
